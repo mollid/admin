@@ -1,0 +1,32 @@
+<extend name="Public:base" />
+<block name="content">
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-title">Default modal</span>
+        </div>
+        <div class="panel-body">
+            <!-- Button trigger modal -->
+            <a href="{:U('Index/modals_tpl')}" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal</a>
+            <a  class="btn btn-primary btn-lg" id="tip">Tip</a>
+        </div>
+    </div>
+
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div> <!-- /.modal -->
+</block>
+
+<block name="js">
+    <script>
+        init.push(function (){
+            $("#tip").on("click",function(){
+                $.growl.notice({ message: "The kitten is cute!" });
+            })
+        })
+    </script>
+</block>

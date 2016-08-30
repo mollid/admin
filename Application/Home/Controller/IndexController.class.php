@@ -8,9 +8,9 @@ class IndexController extends BaseController {
 
     public function table(){
         $field = array(
-            0=>array("name","名称"),
-            1=>array("age","年龄"),
-            2=>array("place","地方"),
+            1=>array("name","名称"),
+            2=>array("age","年龄"),
+            3=>array("place","地方"),
         );
         if(IS_POST){
             $start = I("start",1);
@@ -18,17 +18,21 @@ class IndexController extends BaseController {
             $columns = I("post.columns");
             $order = I("post.order");
 
-            $order_by = $field[$order[0]['column']][0] . " " .$order[0]['dir'];
-
+            if($order[0]['column'] > 0){
+                $order_by = $field[$order[0]['column']][0] . " " .$order[0]['dir'];
+            }
 
             foreach($columns as $k=>$v){
                 if($v['search']['value']){
                     $where[$v['data']] = array("like","%".$v['search']['value']."%");
                 }
             }
-
             $arr['start'] = $start;
-            $arr['data'] = M("member")->where($where)->order($order_by)->limit($start,$length)->select();
+            $db = M("member")->where($where)->limit($start,$length);
+            if($order_by){
+                $db->order($order_by);
+            }
+            $arr['data'] = $db->select();
             $arr['recordsTotal'] = M("member")->count();
             $arr['recordsFiltered'] = M("member")->where($where)->count();
             $this->ajaxReturn($arr);
@@ -50,6 +54,25 @@ class IndexController extends BaseController {
         }
     }
 
+    function del(){
+        Vendor('SimAdmin.Curd');
+        $Simadmin = new \Curd();
+        $field = array(
+            1=>array("name"=>"名称"),
+            2=>array("age"=>"年龄"),
+            3=>array("place"=>"地方"),
+        );
+        $arr = $Simadmin->setField($field);
+        dump($arr);
+    }
+
+    function modals(){
+        $this->display();
+    }
+
+    function modals_tpl(){
+        $this->display();
+    }
 
 
 }
