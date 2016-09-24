@@ -2,7 +2,7 @@
 <block name="content">
     <script>
         init.push(function () {
-            var table = $('#jq-datatables-example').dataTable({
+            var table = $('#jq-datatables-example').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
@@ -10,9 +10,10 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                "pagingType": "full_numbers",
+                "pagingType":   "full_numbers",
                 "columns": [
                     {
+                        "classname":    "text-center",
                         "orderable":      false,
                         "data":           null,
                         "defaultContent": ''
@@ -21,6 +22,7 @@
                     { "data": "age" },
                     { "data": "place" },
                     {
+
                         "orderable":      false,
                         "data":           null,
                         "defaultContent": ''
@@ -37,7 +39,7 @@
                     {
                         targets: 0,
                         render: function (a, b, c) {
-                            var context = "<input type='checkbox' name='id[]' value='"+ a.id+"'>";
+                            var context = "<input type='checkbox'  name='id[]' value='"+ a.id+"'>";
                             return context;
                         }
                     }
@@ -65,10 +67,12 @@
                         "sLast": " 尾页 "
                     }
                 },
-            });
+            } );
+
             $('#jq-datatables-example_wrapper .dataTables_filter input').remove();
 
             $(function(){
+                console.log( table);
                 //搜索
                 $('#search').on( 'click', function () {
                     var name = $("#name").val();
@@ -121,7 +125,7 @@
                         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
                             <thead>
                             <tr>
-                                <th><label class="px-single"><input type="checkbox" id="checkAll" class="px"><span class="lbl"></span></label></th>
+                                <th class="text-center"><label class="px-single"><input type="checkbox" id="checkAll" class="px"><span class="lbl"></span></label></th>
                                 <foreach name="field" item="f">
                                     <th>{$f.1}</th>
                                 </foreach>
